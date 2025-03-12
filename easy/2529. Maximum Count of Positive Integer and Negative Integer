@@ -1,0 +1,34 @@
+function maximumCount(nums: number[]): number {
+    const n = nums.length; 
+
+    function binarySearchFirstNonNegative(): number {
+        let left = 0, right = n - 1;
+        while (left <= right) {
+            let mid = Math.floor((left + right) / 2);
+            if (nums[mid] < 0) {
+                laeft = mid + 1;
+            } else {
+                right = mid - 1;
+            }
+        }
+        return left;
+    }
+
+    function binarySearchFirstPositive(): number {
+        let left = 0, right = n - 1;
+        while (left <= right) {
+            let mid = Math.floor((left + right) / 2);
+            if (nums[mid] <= 0) {
+                left = mid + 1;
+            } else {
+                right = mid - 1;
+            }
+        }
+        return left;
+    }
+
+    const negCount = binarySearchFirstNonNegative();
+    const posCount = n - binarySearchFirstPositive();
+
+    return Math.max(negCount, posCount);
+};
