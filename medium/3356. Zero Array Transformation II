@@ -1,0 +1,51 @@
+/**
+    https://leetcode.com/problems/zero-array-transformation-ii
+    The idea is (1) to use binary search to find the minimum first sequence k.
+    While calculating what to be deducted from the original array, use a (2) difference array to back it. 
+    [-2, 0, 0] -> decrement 2 for all elements of the original array.
+    [-2, 0, 2] -> decrement 2 for [0, 1] element of the original array.
+    [-7, 2, 5, 0] -> for [1], it would be -5. Side effect cleared at [2].
+    That way, we can use only one for loop to finish the transformation of the original array and determine if there's any positive integer in it.
+ */
+function minZeroArray(nums: number[], queries: number[][]): number {
+    // Side note: `right` has to be `queries.length` instead of `queries.length - 1`, as if for the case where the k would be the length of the `queries`, `mid` will never get to the last element when doing binary search.
+    let left = 0, right = queries.length, n = nums.length, k = -1;
+
+    const canZeroArray = (k: number) => {
+        const arr = [...nums];
+        const diff = new Array(n + 1).fill(0); // The difference array
+
+        // Loop through the first k elements in `queries`, apply to diff array
+        for (let i = 0; i < k; i++) {
+            let [l, r, val] = queries[i];
+            diff[l] -= val;
+            // Stops the decrement effect after `r`.
+            if (r + 1 < n) {
+                diff[r + 1] += val;
+            }
+        }
+
+        // Apply the difference array to `arr` using prefix sum
+        let decrement = 0;
+        for (let i = 0; i < n; i++) {
+            decrement += diff[i];
+            arr[i] += decrement;  // Apply changes to the copy array
+            if (arr[i] > 0) return false; // If any value in the copy array is positive, we fail right away
+        }
+        return true;
+
+    }
+
+    while (left <= right) {
+        const mid = Math.floor((left + right) / 2);
+        if (canZeroArray(mid)) {
+            k = mid;
+            // Array can be zero'd with mid... now let's try a smaller k
+            right = mid - 1;
+        } else {
+            // Try a larger mid (aka `k`) in the latter part of the `nums` array.
+            left = mid + 1;
+        }
+    }
+    return k;
+};
