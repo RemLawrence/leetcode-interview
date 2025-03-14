@@ -1,0 +1,16 @@
+/**
+    https://leetcode.com/problems/palindrome-number/
+    When solving palindrome problems, always check from the beginning and end.
+    Then mirror check until mid.
+ */
+function isPalindrome(x: number): boolean {
+    const xString = x.toString();
+    const mid = Math.floor((xString.length - 1) / 2);
+
+    for (let i = 0; i <= mid; i++) {
+        const a = xString[i];
+        const b = xString[xString.length - 1 - i];
+        if (a !== b) return false;
+    }
+    return true;
+};
