@@ -1,0 +1,24 @@
+/**
+    https://leetcode.com/problems/maximum-candies-allocated-to-k-children
+    The core part is to binary search on - "candies per children"
+    Choose the number mid and calculate how many children we can serve with this number.
+ */
+function maximumCandies(candies: number[], k: number): number {
+    let n = candies.length, left = 1, right = Math.max(...candies), result = 0;
+    while (left <= right) {
+        const mid = Math.floor((left + right) / 2); // If I give `mid` candies to everyone...
+        let child = 0;
+        
+        for (const candy of candies) {
+            child += Math.floor(candy / mid); // If I give `mid` candies to everyone...
+        }
+        
+        if (child >= k) { // We can distribute at least `k` children `mid` candies each
+            result = mid;
+            left = mid + 1;
+        } else {
+            right = mid - 1; // Reduce `mid` since we cannot satisfy `k` children
+        }
+    }
+    return result;
+};
