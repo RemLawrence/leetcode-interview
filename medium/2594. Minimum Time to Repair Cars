@@ -1,0 +1,26 @@
+/**
+    https://leetcode.com/problems/minimum-time-to-repair-cars
+ */
+function repairCars(ranks: number[], cars: number): number {
+    let minRank = Math.min(...ranks), maxRank = Math.max(...ranks), left = 1, right = maxRank * (cars ** 2), result = left;
+
+    function canRepairCarsGivenTime(mid: number): boolean {
+        let sum = 0;
+        for (const rank of ranks) {
+            sum += Math.floor(Math.sqrt(mid / rank)); // Don't forget to round this sum... with `Math.floor()`
+            if (sum >= cars) return true
+        }
+        return sum >= cars;
+    }
+
+    while (left <= right) {
+        const mid = Math.floor((left + right) / 2);
+        if (canRepairCarsGivenTime(mid)) {
+            result = mid;
+            right = mid - 1;
+        } else {
+            left = mid + 1;
+        }
+    }
+    return result;
+};
