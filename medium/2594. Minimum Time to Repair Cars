@@ -1,5 +1,6 @@
 /**
     https://leetcode.com/problems/minimum-time-to-repair-cars
+    It's rather simple, as long as you know you need to calculate how many cars can each rank complete given `mid` time and some'em up, then compare with `cars`.
  */
 function repairCars(ranks: number[], cars: number): number {
     let minRank = Math.min(...ranks), maxRank = Math.max(...ranks), left = 1, right = maxRank * (cars ** 2), result = left;
