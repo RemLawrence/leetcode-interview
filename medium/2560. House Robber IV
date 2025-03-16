@@ -1,0 +1,32 @@
+/**
+    https://leetcode.com/problems/house-robber-iv
+    Again, binary search on the result it want
+    Be careful on the max info it gave... you don't need Math.max(..), just making sure mid is smaller than every thing before the mid.
+ */
+function minCapability(nums: number[], k: number): number {
+    let left = Math.min(...nums), right = Math.max(...nums), result = right;
+
+    function canRobAtLeastK(mid: number): boolean {
+        let count = 0;
+        for (let i = 0; i < nums.length; i++) {
+            if (nums[i] <= mid) {
+                count++; // Rob this house
+                i++; // Skip next house (due to adjacency constraint)
+            }
+        }
+        return count >= k; // Check if we were able to rob at least k houses
+    }
+     
+    while (left <= right) {
+        const mid = Math.floor((left + right) / 2);
+
+        if (canRobAtLeastK(mid)) {
+            result = mid; // Store valid capability
+            right = mid - 1; // Try to minimize capability further
+        } else {
+            left = mid + 1; // Increase capability
+        }
+         
+    }
+    return result;
+};
