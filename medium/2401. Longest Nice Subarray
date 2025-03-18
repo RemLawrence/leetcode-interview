@@ -1,0 +1,21 @@
+/**
+    https://leetcode.com/problems/longest-nice-subarray
+ */
+function longestNiceSubarray(nums: number[]): number {
+    let left = 0, maxLength = 0;
+
+    for (let right = 0; right < nums.length; right++) {
+        let i = left;
+        while (i !== right) {
+            if ((nums[i] & nums[right]) !== 0) {
+                left++; // Move left forward until the conflict is gone
+                i = left; // Restart checking from new left
+            } else {
+                i++;
+            }
+        }
+        const curLength = right - left + 1;
+        maxLength = Math.max(maxLength, curLength);
+    }
+    return maxLength;
+};
