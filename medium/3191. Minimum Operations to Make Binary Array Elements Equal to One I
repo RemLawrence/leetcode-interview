@@ -1,0 +1,25 @@
+/**
+    https://leetcode.com/problems/minimum-operations-to-make-binary-array-elements-equal-to-one-i
+    Probably the easiest medium question
+    Just do the basics and follow what it says.
+ */
+function minOperations(nums: number[]): number {
+    let operations = 0;
+    
+    for (let i = 0; i <= nums.length - 3; i++) {
+        if (nums[i] === 0) {
+            // Flip 3 consecutive elements
+            nums[i] ^= 1;
+            nums[i + 1] ^= 1;
+            nums[i + 2] ^= 1;
+            operations++;
+        }
+    }
+
+    // If any remaining 0 exists, it's impossible to make all 1s
+    for (let i = 0; i < nums.length; i++) {
+        if (nums[i] === 0) return -1;
+    }
+
+    return operations;
+}
