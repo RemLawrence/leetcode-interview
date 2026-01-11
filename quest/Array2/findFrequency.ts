@@ -1,3 +1,4 @@
+// Array #1 - frequency array
 function findErrorNums(nums: number[]): number[] {
     const n = nums.length;
     const freq = new Array<number>(n+1).fill(0);
