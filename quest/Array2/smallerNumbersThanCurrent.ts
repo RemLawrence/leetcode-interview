@@ -1,3 +1,4 @@
+// Array #2 - HashMap frequency counting
 function smallerNumbersThanCurrent(nums: number[]): number[] {
     // Transform
     const numsMap = nums.map((value, index) => ({value, index}));
