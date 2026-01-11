@@ -1,3 +1,4 @@
+// Array #2 - HashMap frequency counting
 function findDisappearedNumbers(nums: number[]): number[] {
     const result = Array(nums.length + 1).fill(0);
     for (const num of nums) {
