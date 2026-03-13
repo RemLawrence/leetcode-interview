@@ -22,3 +22,27 @@ function computeSumOfSquares(n: number) {
     squaredValue += value ** 2;
     return squaredValue;
 }
+
+
+
+
+// CLEANER VERSION
+function isHappy(n: number): boolean {
+    let slow = n;
+    let fast = computeSumOfSquares(slow);
+    while (fast !== slow) {
+        slow = computeSumOfSquares(slow);
+        fast = computeSumOfSquares(computeSumOfSquares(fast));
+    }
+    return fast === 1;
+};
+
+function computeSumOfSquares(n: number) {
+    let num = 0;
+    while (n > 0) {
+        let remainder = n % 10;
+        num+= remainder ** 2;
+        n = Math.floor(n/10);
+    }
+    return num
+}
